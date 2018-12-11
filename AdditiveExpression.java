@@ -1,3 +1,4 @@
+import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
             System.out.println("Node clicked");
             node.requestFocus();
             ((Region) node).setBorder(RED_BORDER);
+            if (AbstractCompoundExpression.focusedNode != null)
+                ((Region)AbstractCompoundExpression.focusedNode).setBorder(NO_BORDER);
+            AbstractCompoundExpression.focusedNode = node;
         } );
     }
 

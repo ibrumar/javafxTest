@@ -1,5 +1,6 @@
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.Node;
 
 import java.util.List;
 
@@ -8,6 +9,7 @@ public abstract class AbstractCompoundExpression implements CompoundExpression {
     public List<Expression> _subexpression;
     private CompoundExpression _expr;
     private String _field; //String that equals either "A", "M", or "P" (cannot be LiteralExpression)
+    public static Node focusedNode = null;
 
     //Constructors
     public AbstractCompoundExpression(CompoundExpression expr, List<Expression> subexpression) {
