@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
 
 //Production Rules
 //Terminals = [0-9], [a-z]
@@ -17,20 +18,34 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
     public MultiplicativeExpression me;
 
 
+    private void requestNodeFocus(Node node) {
+        node.setOnMouseClicked( ( e ) ->
+        {
+            System.out.println("Node clicked");
+            node.requestFocus();
+            ((Region) node).setBorder(RED_BORDER);
+        } );
+    }
+
     //it composes only if there is more than one element
     private void composeMultipleSubexpressions(HBox hbox, String operator) { //we mainly need this in the derivate classes
         for (int i = 1; i < _subexpression.size(); ++i) {
             //hbox.getChildren().addAll(new Label(operator), new Label("kid"));
-            hbox.getChildren().addAll(new Label(operator), _subexpression.get(i).getNode());
+            Node node =_subexpression.get(i).getNode();
+            requestNodeFocus(node);
+            hbox.getChildren().addAll(new Label(operator), node);
             //hbox.getChildren().addAll(new Label(operator), _subexpression.get(i).getNode());
         }
     }
 
     public Node getNode() {
         HBox hbox = new HBox(8);
-        hbox.getChildren().addAll(_subexpression.get(0).getNode()); //reuse this code from here and MultiplicativeExpression
+        Node firstNode =_subexpression.get(0).getNode();
+        requestNodeFocus(firstNode);
+        hbox.getChildren().addAll(firstNode); //reuse this code from here and MultiplicativeExpression
         //hbox.getChildren().addAll(new Label("Kid")); //reuse this code from here and MultiplicativeExpression
         composeMultipleSubexpressions(hbox, "+");
+        // when vbox is clicked focus on it
         return (Node) hbox;
     }
 
