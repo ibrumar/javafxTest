@@ -11,6 +11,7 @@ public class ParentheticalExpression extends AbstractCompoundExpression {
     private int _numSubExpr;
     public Expression e;
     public LiteralExpression le;
+    public Node node;
 
     //Constructors
     public ParentheticalExpression() {
@@ -21,13 +22,22 @@ public class ParentheticalExpression extends AbstractCompoundExpression {
     }
 
     public Node getNode() {
-        HBox hbox = new HBox(8);
+        node = new HBox(8);
         if (e != null)
-            hbox.getChildren().addAll(new Label("("));
-        hbox.getChildren().addAll(_subexpression.get(0).getNode()); //there should always be at least one node e|le
+            ((HBox) node).getChildren().addAll(new Label("("));
+        if (e != null) {
+            ((HBox)node).getChildren().addAll(e.getNode());
+            ((AbstractCompoundExpression) e).parent = node;
+        }
+        if (le != null) {
+            ((HBox)node).getChildren().addAll(le.getNode());
+            le.parent = node;
+        }
+        //((HBox)node).getChildren().addAll(_subexpression.get(0).getNode()); //there should always be at least one node e|le
+        //hbox.getChildren().addAll(e.getNode());
         if (e != null)
-            hbox.getChildren().addAll(new Label(")"));
-        return hbox;
+            ((HBox) node).getChildren().addAll(new Label(")"));
+        return node;
     }
 
 
