@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
 
 
 public class LiteralExpression implements Expression { //hello !!
@@ -9,6 +10,7 @@ public class LiteralExpression implements Expression { //hello !!
     private CompoundExpression _parent;
     private int _numSubExpr;
     private int _indentationLevel;
+    public Node parent;
 
     //Constructors
     public LiteralExpression(String str) {
@@ -17,8 +19,10 @@ public class LiteralExpression implements Expression { //hello !!
         _indentationLevel = 0;
     }
 
+
     public Node getNode() {
         Node node = new Label(_str);
+        //requestNodeFocus(node);
         return node;
     }
 

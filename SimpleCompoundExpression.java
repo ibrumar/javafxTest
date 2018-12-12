@@ -2,6 +2,7 @@ import javafx.scene.control.Label;
 import javafx.scene.Node;
 
 public class SimpleCompoundExpression extends AbstractCompoundExpression {
+    private CompoundExpression _parent;
 
     public Node getNode() {
         Node node = new Label();
@@ -16,7 +17,7 @@ public class SimpleCompoundExpression extends AbstractCompoundExpression {
 
     @Override
     public void setParent(CompoundExpression parent) {
-
+        this._parent = parent;
     }
 
     @Override

@@ -17,16 +17,29 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
     private int _numSubExpr;
     public AdditiveExpression ae;
     public MultiplicativeExpression me;
+    public HBox hbox;
 
 
     private void requestNodeFocus(Node node) {
         node.setOnMouseClicked( ( e ) ->
         {
-            System.out.println("Node clicked");
-            node.requestFocus();
+            System.out.println("Node clicked from ADDITIVE.");
+            if (parent == null) {
+                System.out.println("ADDITIVE: Parent is null.");
+                System.out.println("ADDITIVE: NODE IS " + node);
+
+
+            }
+            //if (parent.equals(focusedNode)) System.out.println("ADDITIVE: Parent matches focusedNode.");
+            if (parent != null && parent.equals(focusedNode)) {
+                System.out.println("parent??");
+                ((Region)_parent.getNode()).setBorder(Expression.NO_BORDER);
+                //((Region) node).setBorder(Expression.RED_BORDER);
+            }
+            //node.requestFocus();
             ((Region) node).setBorder(RED_BORDER);
-            if (AbstractCompoundExpression.focusedNode != null)
-                ((Region)AbstractCompoundExpression.focusedNode).setBorder(NO_BORDER);
+            if (AbstractCompoundExpression.focusedNode != null) // if there is a focused node
+                ((Region)AbstractCompoundExpression.focusedNode).setBorder(NO_BORDER); // we remove its border
             AbstractCompoundExpression.focusedNode = node;
         } );
     }
@@ -36,20 +49,27 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
         for (int i = 1; i < _subexpression.size(); ++i) {
             //hbox.getChildren().addAll(new Label(operator), new Label("kid"));
             Node node =_subexpression.get(i).getNode();
+            _subexpression.get(i).parent = hbox;
             requestNodeFocus(node);
             hbox.getChildren().addAll(new Label(operator), node);
+
+            //_subexpression.get(i).setParent(this); // TODO: 11/12/2018 same for multiplicative expression
             //hbox.getChildren().addAll(new Label(operator), _subexpression.get(i).getNode());
         }
     }
 
     public Node getNode() {
-        HBox hbox = new HBox(8);
-        Node firstNode =_subexpression.get(0).getNode();
+        hbox = new HBox(8);
+        Node firstNode =_subexpression.get(0).getNode(); // we call the get node on the first kid because we don't want do add a "+" if there are no more than 1 kid.
+        _subexpression.get(0).parent = hbox;
+        //if (_subexpression.get(0).parent.equals(hbox)) System.out.println("ADDITIVE: THE PARENT OF THE FIRST CHILD IS " + hbox);
         requestNodeFocus(firstNode);
         hbox.getChildren().addAll(firstNode); //reuse this code from here and MultiplicativeExpression
+
         //hbox.getChildren().addAll(new Label("Kid")); //reuse this code from here and MultiplicativeExpression
         composeMultipleSubexpressions(hbox, "+");
         // when vbox is clicked focus on it
+        System.out.println("THIS NODE IS " + hbox);
         return (Node) hbox;
     }
 

@@ -11,6 +11,7 @@ public class ParentheticalExpression extends AbstractCompoundExpression {
     private int _numSubExpr;
     public Expression e;
     public LiteralExpression le;
+    public HBox hbox;
 
     //Constructors
     public ParentheticalExpression() {
