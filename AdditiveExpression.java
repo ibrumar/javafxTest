@@ -21,13 +21,12 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
     private void requestNodeFocus(Node node) {
         node.setOnMouseClicked( ( e ) ->
         {
-<<<<<<< HEAD
                 node.requestFocus();
                 ((Region) node).setBorder(RED_BORDER);
                 if (AbstractCompoundExpression.focusedNode != null)
                     ((Region) AbstractCompoundExpression.focusedNode).setBorder(NO_BORDER);
                 AbstractCompoundExpression.focusedNode = node;
-=======
+
             System.out.println(count++ + " ---------------------------------------- \n Node clicked from ADDITIVE.");
             if (parent == null) {
                 System.out.println("ADDITIVE: Parent is null.");
@@ -46,26 +45,23 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
             if (AbstractCompoundExpression.focusedNode != null) // if there is a focused node
                 ((Region)AbstractCompoundExpression.focusedNode).setBorder(NO_BORDER); // we remove its border
             AbstractCompoundExpression.focusedNode = node;
->>>>>>> da4ddf1afa254b6826d0ae8fe05aed8ee467db71
         } );
     }
 
     //it composes only if there is more than one element
     private void composeMultipleSubexpressions(String operator) { //we mainly need this in the derivate classes
         for (int i = 1; i < _subexpression.size(); ++i) {
-<<<<<<< HEAD
             //hbox.getChildren().addAll(new Label(operator), new Label("kid"));
-            Node node =_subexpression.get(i).getNode();
+            /*Node node =_subexpression.get(i).getNode();
             //todo should i check x and y of mouse click here ??
             requestNodeFocus(node);
-            hbox.getChildren().addAll(new Label(operator), node);
-            //hbox.getChildren().addAll(new Label(operator), _subexpression.get(i).getNode());
-=======
+            node.getChildren().addAll(new Label(operator), node);
+            //hbox.getChildren().addAll(new Label(operator), _subexpression.get(i).getNode());*/
+
             Node kidNode =_subexpression.get(i).getNode();
             _subexpression.get(i).parent = node;
             requestNodeFocus(kidNode);
             ((HBox) node).getChildren().addAll(new Label(operator), kidNode);
->>>>>>> da4ddf1afa254b6826d0ae8fe05aed8ee467db71
         }
     }
 
