@@ -11,6 +11,8 @@ public class LiteralExpression implements Expression { //hello !!
     private int _numSubExpr;
     private int _indentationLevel;
     public Node parent;
+    public Node node;
+
 
     //Constructors
     public LiteralExpression(String str) {
@@ -19,10 +21,35 @@ public class LiteralExpression implements Expression { //hello !!
         _indentationLevel = 0;
     }
 
+    private void requestNodeFocus(Node node) {
+        node.setOnMouseClicked( ( e ) ->
+        {
+            System.out.println("Node clicked from LITERAL.");
+            if (parent == null) {
+                System.out.println("LITERAL: Parent is null.");
+                System.out.println("LITERAL: NODE IS " + node);
+
+
+            }
+            if (parent != null) System.out.println("LITERAL: Parent is " + parent);
+            if (parent != null && parent.equals(AbstractCompoundExpression.focusedNode)) System.out.println("ADDITIVE: Parent matches focusedNode.");
+
+            if (parent != null && parent.equals(AbstractCompoundExpression.focusedNode)) {
+                System.out.println("parent??");
+                ((Region)_parent.getNode()).setBorder(Expression.NO_BORDER);
+                //((Region) node).setBorder(Expression.RED_BORDER);
+            }
+            //node.requestFocus();
+            ((Region) node).setBorder(RED_BORDER);
+            if (AbstractCompoundExpression.focusedNode != null) // if there is a focused node
+                ((Region)AbstractCompoundExpression.focusedNode).setBorder(NO_BORDER); // we remove its border
+            AbstractCompoundExpression.focusedNode = node;
+        } );
+    }
 
     public Node getNode() {
-        Node node = new Label(_str);
-        //requestNodeFocus(node);
+        node = new Label(_str);
+        requestNodeFocus(node);
         return node;
     }
 

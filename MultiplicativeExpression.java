@@ -14,7 +14,7 @@ public class MultiplicativeExpression extends SimpleCompoundExpression {
     public MultiplicativeExpression me1;
     public MultiplicativeExpression me2;
     public ParentheticalExpression pe;
-    private HBox hbox;
+    public Node node;
 
 
     //Constructors
@@ -57,29 +57,30 @@ public class MultiplicativeExpression extends SimpleCompoundExpression {
 
 
     //it composes only if there is more than one element
-    private void composeMultipleSubexpressions(HBox hbox, String operator) { //we mainly need this in the derivate classes
+    private void composeMultipleSubexpressions(String operator) { //we mainly need this in the derivate classes
         for (int i = 1; i < _subexpression.size(); ++i) {
-            Node node =_subexpression.get(i).getNode();
-            _subexpression.get(i).parent = hbox;
-            requestNodeFocus(node);
-            hbox.getChildren().addAll(new Label(operator), node);
+            Node kidNode =_subexpression.get(i).getNode();
+            _subexpression.get(i).parent = node;
+            requestNodeFocus(kidNode);
+            ((HBox) node).getChildren().addAll(new Label(operator), kidNode);
         }
     }
 
     public Node getNode() {
-        hbox = new HBox(8);
+        node = new HBox(8);
         //hbox.getChildren().addAll(_subexpression.get(0).getNode());
         Node firstNode =_subexpression.get(0).getNode();
-        _subexpression.get(0).parent = hbox;
+        _subexpression.get(0).parent = node;
         //if (_subexpression.get(0).parent.equals(hbox)) System.out.println("MULTIPLICATIVE: THE PARENT OF" + " IS THE FIRST CHILD IS " + hbox);
         requestNodeFocus(firstNode);
-        ((HBox)hbox).getChildren().addAll(firstNode);
-        composeMultipleSubexpressions(hbox, "*");
-        System.out.println("THIS NODE IS " + hbox + "and has children:");
+        ((HBox)node).getChildren().addAll(firstNode);
+        composeMultipleSubexpressions("*");
+        System.out.println("THIS NODE IS " + node + "and has children:");
         for (int i = 0; i < _subexpression.size(); i++) {
-            System.out.println("   " + ((ParentheticalExpression)_subexpression.get(i)).hbox);
+            if (_subexpression.get(i).parent.equals(node)) System.out.println("TRUEEEEEEEEE");
+            System.out.println("   " + ((ParentheticalExpression)_subexpression.get(i)).node);
         }
-        return (Node) hbox;
+        return (Node) node;
     }
 
     public void addSubexpression(Expression subexpression) {
