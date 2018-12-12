@@ -1,6 +1,4 @@
-import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
-
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Node;
@@ -10,8 +8,6 @@ import javafx.scene.layout.Region;
 //Production Rules
 //Terminals = [0-9], [a-z]
 
-//CADY COMMENT 
-
 public class AdditiveExpression extends SimpleCompoundExpression {//implements CompoundExpression {
     //Variables
     private CompoundExpression _parent;
@@ -20,16 +16,14 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
     public AdditiveExpression ae;
     public MultiplicativeExpression me;
 
-
     private void requestNodeFocus(Node node) {
         node.setOnMouseClicked( ( e ) ->
         {
-            System.out.println("Node clicked");
-            node.requestFocus();
-            ((Region) node).setBorder(RED_BORDER);
-            if (AbstractCompoundExpression.focusedNode != null)
-                ((Region)AbstractCompoundExpression.focusedNode).setBorder(NO_BORDER);
-            AbstractCompoundExpression.focusedNode = node;
+                node.requestFocus();
+                ((Region) node).setBorder(RED_BORDER);
+                if (AbstractCompoundExpression.focusedNode != null)
+                    ((Region) AbstractCompoundExpression.focusedNode).setBorder(NO_BORDER);
+                AbstractCompoundExpression.focusedNode = node;
         } );
     }
 
@@ -38,6 +32,7 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
         for (int i = 1; i < _subexpression.size(); ++i) {
             //hbox.getChildren().addAll(new Label(operator), new Label("kid"));
             Node node =_subexpression.get(i).getNode();
+            //todo should i check x and y of mouse click here ??
             requestNodeFocus(node);
             hbox.getChildren().addAll(new Label(operator), node);
             //hbox.getChildren().addAll(new Label(operator), _subexpression.get(i).getNode());

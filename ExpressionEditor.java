@@ -1,20 +1,13 @@
 import javafx.application.Application;
-import java.util.*;
-import javafx.geometry.Point2D;
-import javafx.scene.control.Label;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.event.EventHandler;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 public class ExpressionEditor extends Application {
@@ -26,11 +19,22 @@ public class ExpressionEditor extends Application {
      * Mouse event handler for the entire pane that constitutes the ExpressionEditor
      */
     private static class MouseEventHandler implements EventHandler<MouseEvent> {
-        MouseEventHandler (Pane pane_, CompoundExpression rootExpression_) {
+        private Pane _pane;
+        private CompoundExpression _rootExpression;
+
+        MouseEventHandler (Pane pane, CompoundExpression rootExpression) {
+            _pane = pane;
+            _rootExpression = rootExpression;
         }
 
         public void handle (MouseEvent event) {
             if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                //if there is a focused node and the mouse click is not in its range, get rid of border
+                if(AbstractCompoundExpression.focusedNode != null &&
+                            !AbstractCompoundExpression.focusedNode.contains(event.getX(), event.getY())) {
+                    ((Region) AbstractCompoundExpression.focusedNode).setBorder(null);
+                    AbstractCompoundExpression.focusedNode = null;
+                }
             } else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
             } else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
             }
@@ -91,6 +95,7 @@ public class ExpressionEditor extends Application {
                 }
             }
         });
+
         queryPane.getChildren().add(button);
 
         // Reset the color to black whenever the user presses a key

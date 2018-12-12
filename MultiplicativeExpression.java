@@ -1,3 +1,4 @@
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -25,21 +26,14 @@ public class MultiplicativeExpression extends SimpleCompoundExpression {
         pe = null;
     }
 
-    //public Node getNode() {
-    //    HBox hbox = new HBox(8);
-    //    hbox.getChildren().addAll(new Label("*"), new Label("Kids to be added"));
-    //    return (Node) hbox;
-    //}
-
-
     private void requestNodeFocus(Node node) {
         node.setOnMouseClicked( ( e ) ->
         {
-            System.out.println("Node clicked");
+            System.out.println("Node clicked m");
             node.requestFocus();
             ((Region) node).setBorder(RED_BORDER);
             if (AbstractCompoundExpression.focusedNode != null)
-                ((Region)AbstractCompoundExpression.focusedNode).setBorder(NO_BORDER);
+                ((Region) AbstractCompoundExpression.focusedNode).setBorder(NO_BORDER);
             AbstractCompoundExpression.focusedNode = node;
         } );
     }

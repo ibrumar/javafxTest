@@ -1,8 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 
 public class ParentheticalExpression extends AbstractCompoundExpression {
     //Variables
