@@ -58,7 +58,7 @@ public class MultiplicativeExpression extends SimpleCompoundExpression {
         HBox hbox = new HBox(8);
         //hbox.getChildren().addAll(_subexpression.get(0).getNode());
         Node firstNode =_subexpression.get(0).getNode();
-        requestNodeFocus(firstNode);
+        requestNodeFocus(firstNode);//program the onClick event
         hbox.getChildren().addAll(firstNode);
         composeMultipleSubexpressions(hbox, "*");
         return (Node) hbox;

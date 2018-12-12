@@ -19,7 +19,7 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
     public MultiplicativeExpression me;
 
 
-    private void requestNodeFocus(Node node) {
+    private void requestNodeFocus(Node node) { // TODO: 12/11/18 add a field of type NOde named parent in each type of expression in prder to remember for each expression who is its parent 
         node.setOnMouseClicked( ( e ) ->
         {
             System.out.println("Node clicked");
@@ -45,7 +45,7 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
     public Node getNode() {
         HBox hbox = new HBox(8);
         Node firstNode =_subexpression.get(0).getNode();
-        requestNodeFocus(firstNode);
+        requestNodeFocus(firstNode); //program the onClick event
         hbox.getChildren().addAll(firstNode); //reuse this code from here and MultiplicativeExpression
         //hbox.getChildren().addAll(new Label("Kid")); //reuse this code from here and MultiplicativeExpression
         composeMultipleSubexpressions(hbox, "+");
