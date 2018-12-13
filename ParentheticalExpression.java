@@ -12,6 +12,7 @@ public class ParentheticalExpression extends AbstractCompoundExpression {
     public Expression e;
     public LiteralExpression le;
     public Node node;
+    public int focusLevel = 0;
 
     //Constructors
     public ParentheticalExpression() {
@@ -21,8 +22,20 @@ public class ParentheticalExpression extends AbstractCompoundExpression {
         le = null;
     }
 
+
+    private int computeHashOnToString(String str) {
+        int result = 0;
+        for (char chr : str.toCharArray()){
+            result += chr;
+        }
+        return result;
+    }
+
     public Node getNode() {
         node = new HBox(8);
+        String thisNodeStr =  convertToString(0);
+        int expressionId = computeHashOnToString(thisNodeStr);
+        System.out.println("\n PARE id="+expressionId + "| " +"The node you are parsing is " + thisNodeStr + " with focus level " + focusLevel + " and hbox " + node + " and parent " + parent);
         if (e != null)
             ((HBox) node).getChildren().addAll(new Label("("));
         if (e != null) {

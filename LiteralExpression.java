@@ -28,8 +28,6 @@ public class LiteralExpression implements Expression { //hello !!
             if (parent == null) {
                 System.out.println("LITERAL: Parent is null.");
                 System.out.println("LITERAL: NODE IS " + node);
-
-
             }
             if (parent != null) System.out.println("LITERAL: Parent is " + parent);
             if (parent != null && parent.equals(AbstractCompoundExpression.focusedNode)) System.out.println("ADDITIVE: Parent matches focusedNode.");
@@ -49,7 +47,7 @@ public class LiteralExpression implements Expression { //hello !!
 
     public Node getNode() {
         node = new Label(_str);
-        requestNodeFocus(node);
+        //requestNodeFocus(node);
         return node;
     }
 

@@ -73,13 +73,14 @@ public class ExpressionEditor extends Application {
                     final Expression expression = expressionParser.parse(textField.getText(), true);
                     System.out.println(expression.convertToString(0));
                     expressionPane.getChildren().clear();
-                    expressionPane.getChildren().add(expression.getNode());
-                    expression.getNode().setLayoutX(WINDOW_WIDTH/4);
-                    expression.getNode().setLayoutY(WINDOW_HEIGHT/2);
+                    Node expNode = expression.getNode();
+                    expressionPane.getChildren().add(expNode);
+                    expNode.setLayoutX(WINDOW_WIDTH/4);
+                    expNode.setLayoutY(WINDOW_HEIGHT/2);
 
                     // If the parsed expression is a CompoundExpression, then register some callbacks
                     if (expression instanceof CompoundExpression) {
-                        ((Pane) expression.getNode()).setBorder(Expression.NO_BORDER);
+                        ((Pane) expNode).setBorder(Expression.NO_BORDER);
                         final MouseEventHandler eventHandler = new MouseEventHandler(expressionPane, (CompoundExpression) expression);
                         expressionPane.setOnMousePressed(eventHandler);
                         expressionPane.setOnMouseDragged(eventHandler);
