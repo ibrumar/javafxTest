@@ -153,7 +153,7 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
         int expressionId = computeHashOnToString(thisNodeStr);
         System.out.println("\n SUMA id="+expressionId + "| " +"The node you are parsing is " + thisNodeStr + " with focus level " + focusLevel + " and hbox " + node + " and parent " + parent);
         _subexpression.get(0).parent = node;
-        _subexpression.get(0).focusLevel = focusLevel + 1;
+        _subexpression.get(0).focusLevel = focusLevel + 1; //doing this before the getNode is very important because all the focusLevels are going to be updated accordingly
         Node firstNode = _subexpression.get(0).getNode();
         //if (_subexpression.get(0).parent.equals(hbox)) System.out.println("MULTIPLICATIVE: THE PARENT OF" + " IS THE FIRST CHILD IS " + hbox);
         programOnClickEvent(firstNode, _subexpression.get(0));

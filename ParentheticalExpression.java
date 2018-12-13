@@ -3,6 +3,7 @@ import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 
 public class ParentheticalExpression extends AbstractCompoundExpression {
     //Variables
@@ -31,25 +32,130 @@ public class ParentheticalExpression extends AbstractCompoundExpression {
         return result;
     }
 
+
+    private void programOnClickEvent(Node kidNode, MultiplicativeExpression kidEx) {
+
+//        System.out.println("You are programming the " + kidEx.convertToString(0) + " \n expression ");
+        kidNode.setOnMouseClicked( ( e ) ->
+        {
+            System.out.println("You are executing the addition function");
+
+            int expressionId;
+            if (kidEx.parent != null) {
+                expressionId = computeHashOnToString(kidEx.convertToString(0));
+                System.out.println("id="+expressionId + "| " +"The node you clicked on is " + kidEx.convertToString(0));
+            }
+            else {
+                expressionId = -1;
+                System.out.println("id="+expressionId + "| " +"This node has null parent");
+            }
+
+            //if (AbstractCompoundExpression.focusedNode != null && AbstractCompoundExpression.focusLevel == focusLevel) //eliminating the previous border
+
+
+            if (AbstractCompoundExpression.focusedNode == null)
+                System.out.println("id="+expressionId + "| " +"There is no previous focused node");
+            else
+                System.out.println("id="+expressionId + "| " +"There was a previous focused node");
+
+            System.out.println("id="+expressionId + "| " +"Kid's parent is the focused node="+ kidEx.parent.equals(AbstractCompoundExpression.focusedNode));
+            System.out.println("id="+expressionId + "| " +"Focused node is null="+ (AbstractCompoundExpression.focusedNode==null));
+            System.out.println("id="+expressionId + "| " +"AbstractCompoundExpression.focusLevel is the abstract focus level="+ (AbstractCompoundExpression.focusLevel==kidEx.focusLevel));
+            System.out.println("id="+expressionId + "| the abstract focused level is " + AbstractCompoundExpression.focusLevel);
+            System.out.println("id="+expressionId + "| the kidExFocus is +" + kidEx.focusLevel);
+
+
+            //if (parent.equals(focusedNode)) System.out.println("ADDITIVE: Parent matches focusedNode.");
+            if ((kidEx.parent.equals(AbstractCompoundExpression.focusedNode) || AbstractCompoundExpression.focusedNode == null) && AbstractCompoundExpression.focusLevel + 1 == kidEx.focusLevel) {
+                if (AbstractCompoundExpression.focusedNode != null)
+                    ((Region)AbstractCompoundExpression.focusedNode).setBorder(NO_BORDER);
+                //if ((kidEx.parent != null && kidEx.parent.equals(focusedNode)) || AbstractCompoundExpression.focusedNode == null) {
+                //((Region)kidNode).setBorder(Expression.NO_BORDER);
+                ((Region) kidNode).setBorder(RED_BORDER);
+                kidNode.requestFocus();
+                AbstractCompoundExpression.focusedNode = kidNode;
+                System.out.println("id="+expressionId + "| " +"The node that took into account an event " + kidEx.convertToString(0) );
+                System.out.println("id="+expressionId + "| " +"and the kid node you are setting is  " + kidNode );
+                System.out.println("id="+expressionId + "| " +"which translated to the focused node  " + AbstractCompoundExpression.focusedNode );
+                ++AbstractCompoundExpression.focusLevel;
+            }
+        } );
+    }
+
+
+    private void programOnClickEvent(Node kidNode, AdditiveExpression kidEx) {
+
+//        System.out.println("You are programming the " + kidEx.convertToString(0) + " \n expression ");
+        kidNode.setOnMouseClicked( ( e ) ->
+        {
+            System.out.println("You are executing the addition function");
+
+            int expressionId;
+            if (kidEx.parent != null) {
+                expressionId = computeHashOnToString(kidEx.convertToString(0));
+                System.out.println("id="+expressionId + "| " +"The node you clicked on is " + kidEx.convertToString(0));
+            }
+            else {
+                expressionId = -1;
+                System.out.println("id="+expressionId + "| " +"This node has null parent");
+            }
+
+            //if (AbstractCompoundExpression.focusedNode != null && AbstractCompoundExpression.focusLevel == focusLevel) //eliminating the previous border
+
+
+            if (AbstractCompoundExpression.focusedNode == null)
+                System.out.println("id="+expressionId + "| " +"There is no previous focused node");
+            else
+                System.out.println("id="+expressionId + "| " +"There was a previous focused node");
+
+            System.out.println("id="+expressionId + "| " +"Kid's parent is the focused node="+ kidEx.parent.equals(AbstractCompoundExpression.focusedNode));
+            System.out.println("id="+expressionId + "| " +"Focused node is null="+ (AbstractCompoundExpression.focusedNode==null));
+            System.out.println("id="+expressionId + "| " +"AbstractCompoundExpression.focusLevel is the abstract focus level="+ (AbstractCompoundExpression.focusLevel==kidEx.focusLevel));
+            System.out.println("id="+expressionId + "| the abstract focused level is " + AbstractCompoundExpression.focusLevel);
+            System.out.println("id="+expressionId + "| the kidExFocus is +" + kidEx.focusLevel);
+
+
+            //if (parent.equals(focusedNode)) System.out.println("ADDITIVE: Parent matches focusedNode.");
+            if ((kidEx.parent.equals(AbstractCompoundExpression.focusedNode) || AbstractCompoundExpression.focusedNode == null) && AbstractCompoundExpression.focusLevel + 1 == kidEx.focusLevel) {
+                if (AbstractCompoundExpression.focusedNode != null)
+                    ((Region)AbstractCompoundExpression.focusedNode).setBorder(NO_BORDER);
+                //if ((kidEx.parent != null && kidEx.parent.equals(focusedNode)) || AbstractCompoundExpression.focusedNode == null) {
+                //((Region)kidNode).setBorder(Expression.NO_BORDER);
+                ((Region) kidNode).setBorder(RED_BORDER);
+                kidNode.requestFocus();
+                AbstractCompoundExpression.focusedNode = kidNode;
+                System.out.println("id="+expressionId + "| " +"The node that took into account an event " + kidEx.convertToString(0) );
+                System.out.println("id="+expressionId + "| " +"and the kid node you are setting is  " + kidNode );
+                System.out.println("id="+expressionId + "| " +"which translated to the focused node  " + AbstractCompoundExpression.focusedNode );
+                ++AbstractCompoundExpression.focusLevel;
+            }
+        } );
+    }
+
     public Node getNode() {
         node = new HBox(8);
         String thisNodeStr =  convertToString(0);
         int expressionId = computeHashOnToString(thisNodeStr);
         System.out.println("\n PARE id="+expressionId + "| " +"The node you are parsing is " + thisNodeStr + " with focus level " + focusLevel + " and hbox " + node + " and parent " + parent);
-        if (e != null)
-            ((HBox) node).getChildren().addAll(new Label("("));
         if (e != null) {
-            ((HBox)node).getChildren().addAll(e.getNode());
             ((AbstractCompoundExpression) e).parent = node;
-        }
-        if (le != null) {
+            ((AbstractCompoundExpression) e).focusLevel = focusLevel + 1;
+            ((HBox) node).getChildren().addAll(new Label("("));
+            //Node kidNode = e.getNode();
+            //((HBox)node).getChildren().addAll(kidNode);
+            ((HBox) node).getChildren().addAll(new Label(")"));
+
+            //if (e instanceof AdditiveExpression)
+            //    programOnClickEvent(kidNode, (AdditiveExpression) e);
+            //else
+            //    programOnClickEvent(kidNode, (MultiplicativeExpression) e);
+        } else { //in case just a literal is being contained
             ((HBox)node).getChildren().addAll(le.getNode());
             le.parent = node;
         }
         //((HBox)node).getChildren().addAll(_subexpression.get(0).getNode()); //there should always be at least one node e|le
         //hbox.getChildren().addAll(e.getNode());
-        if (e != null)
-            ((HBox) node).getChildren().addAll(new Label(")"));
+        //if (e != null)
         return node;
     }
 
