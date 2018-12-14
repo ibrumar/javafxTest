@@ -27,45 +27,13 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
     private void requestNodeFocus(Node node) {
         node.setOnMouseClicked( ( e ) ->
         {
+            node.requestFocus();
 
-                node.requestFocus();
-
-            /*node.requestFocus();
->>>>>>> c50fc43137a08b18ed2e794243a073b34a49f887
-                ((Region) node).setBorder(RED_BORDER);
-                if (AbstractCompoundExpression.focusedNode != null)
-                    ((Region) AbstractCompoundExpression.focusedNode).setBorder(NO_BORDER);
-                AbstractCompoundExpression.focusedNode = node;
-<<<<<<< HEAD
-
-            System.out.println(count++ + " ---------------------------------------- \n Node clicked from ADDITIVE.");
-            if (parent == null) {
-                System.out.println("ADDITIVE: Parent is null.");
-                System.out.println("ADDITIVE: NODE IS " + node);
-=======
-                System.out.println(count++ + " ---------------------------------------- \n Node clicked from ADDITIVE.");
-                if (parent == null) {
-                    System.out.println("ADDITIVE: Parent is null.");
-                    System.out.println("ADDITIVE: NODE IS " + node);
-                }
->>>>>>> c50fc43137a08b18ed2e794243a073b34a49f887
-
-            //if (parent.equals(focusedNode)) System.out.println("ADDITIVE: Parent matches focusedNode.");
-            if (parent != null && parent.equals(focusedNode)) {
-                System.out.println("parent??");
-                ((Region)_parent.getNode()).setBorder(Expression.NO_BORDER);
-                //((Region) node).setBorder(Expression.RED_BORDER);
-            }*/
-
-            System.out.println("focus");
-
-            //Expression copy = ((Expression) node).deepCopy();
-
-            //node.requestFocus();
             ((Region) node).setBorder(RED_BORDER);
 
+            AbstractCompoundExpression.deepCopy = AbstractCompoundExpression.focusedNode;
+
             if (AbstractCompoundExpression.focusedNode != null) { // if there is a focused node
-                //System.out.println("in requestfocusnode if");
                 ((Region) AbstractCompoundExpression.focusedNode).setBorder(NO_BORDER);
             }// we remove its border
 
@@ -80,21 +48,6 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
     //it composes only if there is more than one element
     private void composeMultipleSubexpressions(String operator) { //we mainly need this in the derivate classes
         for (int i = 1; i < _subexpression.size(); ++i) {
-
-            //hbox.getChildren().addAll(new Label(operator), new Label("kid"));
-            /*Node node =_subexpression.get(i).getNode();
-            //todo should i check x and y of mouse click here ??
-            requestNodeFocus(node);
-            node.getChildren().addAll(new Label(operator), node);
-
-
-            /*hbox.getChildren().addAll(new Label(operator), new Label("kid"));
-            Node node =_subexpression.get(i).getNode();
-            //todo should i check x and y of mouse click here ??
-            requestNodeFocus(node);
-            hbox.getChildren().addAll(new Label(operator), node);
-            //hbox.getChildren().addAll(new Label(operator), _subexpression.get(i).getNode());*/
-
             Node kidNode =_subexpression.get(i).getNode();
             _subexpression.get(i).parent = node;
             requestNodeFocus(kidNode);
@@ -117,7 +70,6 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
         //hbox.getChildren().addAll(new Label("Kid")); //reuse this code from here and MultiplicativeExpression
         composeMultipleSubexpressions( "+");
         // when vbox is clicked focus on it
-        System.out.println("THIS NODE IS " + node + "and has children:");
         for (int i = 0; i < _subexpression.size(); i++) {
             if (_subexpression.get(i).parent.equals(node)) System.out.println("TRUEEEEEEEEE");
             System.out.println("   " + ((MultiplicativeExpression)_subexpression.get(i)).node);
