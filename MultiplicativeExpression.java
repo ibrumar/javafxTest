@@ -30,7 +30,6 @@ public class MultiplicativeExpression extends SimpleCompoundExpression {
     private void requestNodeFocus(Node node) {
         node.setOnMouseClicked( ( e ) ->
         {
-            System.out.println("Node clicked m");
             System.out.println("Node clicked from MULTIPLICATIVE.");
             if (parent == null) {
                 System.out.println("MULTIPLICATIVE: Parent is null.");
