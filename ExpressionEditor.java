@@ -1,14 +1,15 @@
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javax.swing.*;
 
 public class ExpressionEditor extends Application {
     public static void main (String[] args) {
@@ -21,6 +22,8 @@ public class ExpressionEditor extends Application {
     private static class MouseEventHandler implements EventHandler<MouseEvent> {
         private Pane _pane;
         private CompoundExpression _rootExpression;
+        private double _startSceneX;
+        private double _startSceneY;
 
         MouseEventHandler (Pane pane, CompoundExpression rootExpression) {
             _pane = pane;
@@ -29,14 +32,55 @@ public class ExpressionEditor extends Application {
 
         public void handle (MouseEvent event) {
             if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                _startSceneX = event.getSceneX();
+                _startSceneY = event.getSceneY();
+
                 //if there is a focused node and the mouse click is not in its range, get rid of border
-                if(AbstractCompoundExpression.focusedNode != null &&
-                            !AbstractCompoundExpression.focusedNode.contains(event.getX(), event.getY())) {
-                    ((Region) AbstractCompoundExpression.focusedNode).setBorder(null);
-                    AbstractCompoundExpression.focusedNode = null;
+                if(AbstractCompoundExpression.focusedNode != null) {
+                    double ex = AbstractCompoundExpression.focusedNode.sceneToLocal(_startSceneX, _startSceneY).getX();
+                    double ey = AbstractCompoundExpression.focusedNode.sceneToLocal(_startSceneX, _startSceneY).getY();
+
+                    if(!(AbstractCompoundExpression.focusedNode.contains(ex, ey))) {
+                        System.out.println("REMOVING BORDER");
+                        ((Region) AbstractCompoundExpression.focusedNode).setBorder(Border.EMPTY);
+                        AbstractCompoundExpression.focusedNode = null;
+                    }
                 }
             } else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+                if (AbstractCompoundExpression.focusedNode != null) {
+                    double ex = AbstractCompoundExpression.focusedNode.sceneToLocal(_startSceneX, _startSceneY).getX();
+                    double ey = AbstractCompoundExpression.focusedNode.sceneToLocal(_startSceneX, _startSceneY).getY();
+
+                    /*
+                    //Create the ghost
+                    System.out.println(_rootExpression);
+                    Label deepCopy = new Label(_rootExpression.deepCopy().convertToString(0));
+                    deepCopy.setTextFill(Color.LIGHTGREY);
+                    deepCopy.setLayoutX(_startSceneX);
+                    deepCopy.setLayoutY(_startSceneY);
+                    _pane.getChildren().add(deepCopy);
+                    */
+
+                    //Drag
+                    if(AbstractCompoundExpression.focusedNode.contains(ex, ey)) {
+                        AbstractCompoundExpression.focusedNode.setTranslateX(event.getSceneX() - _startSceneX);
+                        AbstractCompoundExpression.focusedNode.setTranslateY(event.getSceneY() - _startSceneY);
+                    }
+                }
             } else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
+                if (AbstractCompoundExpression.focusedNode != null) {
+                    System.out.println("release if");
+                    AbstractCompoundExpression.focusedNode.setLayoutX(event.getSceneX() + AbstractCompoundExpression.focusedNode.getTranslateX());
+                    AbstractCompoundExpression.focusedNode.setLayoutY(event.getSceneY() + AbstractCompoundExpression.focusedNode.getTranslateY());
+                    AbstractCompoundExpression.focusedNode.setTranslateX(0);
+                    AbstractCompoundExpression.focusedNode.setTranslateY(0);
+
+                    AbstractCompoundExpression.focusedNode.setLayoutX(_startSceneX);
+                    AbstractCompoundExpression.focusedNode.setLayoutY(_startSceneY);
+
+                    //Print out new tree
+                    System.out.println(_rootExpression.convertToString(0));
+                }
             }
         }
     }

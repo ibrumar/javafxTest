@@ -1,4 +1,6 @@
 import javafx.scene.layout.HBox;
+
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Node;
@@ -18,6 +20,10 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
     public Node node;
     public int count = 0;
 
+    /**
+     *
+     * @param node
+     */
     private void requestNodeFocus(Node node) {
         node.setOnMouseClicked( ( e ) ->
         {
@@ -39,14 +45,26 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
                 //((Region) node).setBorder(Expression.RED_BORDER);
             }*/
 
+            System.out.println("focus");
+
+            //Expression copy = ((Expression) node).deepCopy();
+
             //node.requestFocus();
             ((Region) node).setBorder(RED_BORDER);
-            if (AbstractCompoundExpression.focusedNode != null) // if there is a focused node
-                ((Region)AbstractCompoundExpression.focusedNode).setBorder(NO_BORDER); // we remove its border
+
+            if (AbstractCompoundExpression.focusedNode != null) { // if there is a focused node
+                //System.out.println("in requestfocusnode if");
+                ((Region) AbstractCompoundExpression.focusedNode).setBorder(NO_BORDER);
+            }// we remove its border
+
             AbstractCompoundExpression.focusedNode = node;
         } );
     }
 
+    /**
+     *
+     * @param operator
+     */
     //it composes only if there is more than one element
     private void composeMultipleSubexpressions(String operator) { //we mainly need this in the derivate classes
         for (int i = 1; i < _subexpression.size(); ++i) {
@@ -65,6 +83,10 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Node getNode() {
         node = new HBox(8);
         Node firstNode =_subexpression.get(0).getNode(); // we call the get node on the first kid because we don't want do add a "+" if there are no more than 1 kid.
